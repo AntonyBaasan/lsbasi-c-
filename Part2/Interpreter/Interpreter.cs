@@ -7,12 +7,14 @@ namespace Interpreter
         private readonly string text;
         private int pos;
         private Token currentToken;
+        private char currentChar;
 
         public Interpreter(string text)
         {
             this.text = text;
             pos = 0;
             currentToken = null;
+            currentChar = text[pos];
         }
 
         public int Expr()
@@ -23,12 +25,19 @@ namespace Interpreter
             Eat(TokenType.INTEGER);
 
             var op = currentToken;
-            Eat(TokenType.PLUS);
+            if(op.TokenType == TokenType.PLUS)
+                Eat(TokenType.PLUS);
+            else
+                Eat(TokenType.MINUS);
 
             var right = currentToken;
             Eat(TokenType.INTEGER);
 
-            return int.Parse(left.Value) + int.Parse(right.Value);
+
+            if(op.TokenType == TokenType.PLUS)
+                return int.Parse(left.Value) + int.Parse(right.Value);
+            else
+                return int.Parse(left.Value) - int.Parse(right.Value);
         }
 
         private void Error()
@@ -36,30 +45,69 @@ namespace Interpreter
             throw new Exception("Error input string");
         }
 
+        private void Advance()
+        {
+            pos++; ;
+            if (pos > text.Length - 1)
+            {
+                currentChar = char.MinValue;// indicate end of the input
+            }
+            else
+            {
+                currentChar = text[pos];
+            }
+        }
+
+        private void SkipWhiteSpace()
+        {
+            while (currentChar != char.MinValue && char.IsWhiteSpace(currentChar))
+            {
+                Advance();
+            }
+        }
+
+        private int Integer()
+        {
+            string result = "";
+            while (currentChar != char.MinValue && char.IsDigit(currentChar))
+            {
+                result += currentChar;
+                Advance();
+            }
+
+            return int.Parse(result);
+        }
+
         private Token GetNextToken()
         {
-            var text = this.text;
-
-            if (pos > text.Length - 1)
-                return new Token(TokenType.EOF, null);
-
-            var currentChar = text[pos];
-
-            if (char.IsDigit(currentChar))
+            while (currentChar != char.MinValue)
             {
-                var token = new Token(TokenType.INTEGER, currentChar.ToString());
-                pos++;
-                return token;
+                if (char.IsWhiteSpace(currentChar))
+                {
+                    SkipWhiteSpace();
+                    continue;
+                }
+
+                if (char.IsDigit(currentChar))
+                {
+                    return new Token(TokenType.INTEGER, Integer().ToString());
+                }
+
+                if (currentChar == '+')
+                {
+                    Advance();
+                    return new Token(TokenType.PLUS, "+");
+                }
+
+                if (currentChar == '-')
+                {
+                    Advance();
+                    return new Token(TokenType.MINUS, "-");
+                }
+
+                Error();
             }
 
-            if (currentChar == '+')
-            {
-                var token = new Token(TokenType.PLUS, currentChar.ToString());
-                pos++;
-                return token;
-            }
-
-            Error();
             return null;
         }
 
@@ -73,9 +121,7 @@ namespace Interpreter
             {
                 Error();
             }
-
         }
-
 
     }
 }
