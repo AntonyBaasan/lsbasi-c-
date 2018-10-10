@@ -13,6 +13,17 @@ namespace Interpreter.Tests
             return inter;
         }
         [Theory]
+        [InlineData("7 + 3", "73+")]
+        [InlineData("7 + 4 - 3", "74+3-")]
+        [InlineData("7 + (4 - 3)", "743-+")]
+        [InlineData("(5 + 3) * 12 / 3", "53+12*3/")]
+        [InlineData("2 + 3 * 5", "235*+")]
+        public void Should_Succes_When_PolishNotation(string input, string result)
+        {
+            Assert.Equal(result, GetInterpreter(input).GetPolishNotation());
+        }
+
+        [Theory]
         [InlineData("7 + 3 * (10 / (12 / (3 + 1) - 1)))", 22)]
         [InlineData("7 + 3 * (10 / (12 / (3 + 1) - 1)) / (2 + 3) - 5 - 3 + (8)", 10)]
         [InlineData("7 + (((3 + 2)))", 12)]

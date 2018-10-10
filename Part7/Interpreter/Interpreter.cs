@@ -44,5 +44,11 @@ namespace Interpreter
             return Visit(tree);
         }
 
+        public string GetPolishNotation()
+        {
+            var tree = parser.Parse();
+            return VisitForPN(tree);
+        }
+
     }
 }
