@@ -5,15 +5,20 @@ namespace Interpreter.Tests
 {
     public class InterpreterTests
     {
+        private Interpreter GetInterpreter(string input)
+        {
+            var lexer = new Lexer(input);
+            var parser = new Parser(lexer);
+            Interpreter inter = new Interpreter(parser);
+            return inter;
+        }
         [Theory]
         [InlineData("7 + 3 * (10 / (12 / (3 + 1) - 1)))", 22)]
         [InlineData("7 + 3 * (10 / (12 / (3 + 1) - 1)) / (2 + 3) - 5 - 3 + (8)", 10)]
         [InlineData("7 + (((3 + 2)))", 12)]
         public void Should_Succes_When_Parentheses(string input, int result)
         {
-            var lexer = new Lexer(input);
-            Interpreter inter = new Interpreter(lexer);
-            Assert.Equal(result, inter.Expr());
+            Assert.Equal(result, GetInterpreter(input).Interpret());
         }
 
         [Theory]
@@ -23,9 +28,7 @@ namespace Interpreter.Tests
         [InlineData("14 + 2 * 3 - 6 / 2", 17)]
         public void Should_Succes_When_MultipAndDivAndAddAndMinus(string input, int result)
         {
-            var lexer = new Lexer(input);
-            Interpreter inter = new Interpreter(lexer);
-            Assert.Equal(result, inter.Expr());
+            Assert.Equal(result, GetInterpreter(input).Interpret());
         }
 
         [Theory]
@@ -35,46 +38,35 @@ namespace Interpreter.Tests
         [InlineData("14 + 2 * 3 - 6 / 2", 17)]
         public void Should_Succes_When_MultipAndDivMultipleNumbers(string input, int result)
         {
-            var lexer = new Lexer(input);
-            Interpreter inter = new Interpreter(lexer);
-            Assert.Equal(result, inter.Expr());
+            Assert.Equal(result, GetInterpreter(input).Interpret());
         }
 
         [Fact]
         public void Should_Succes_When_AddAndSubMultipleNumbers()
         {
             string text = "3+2-1+9";
-            var lexer = new Lexer(text);
-            Interpreter inter = new Interpreter(lexer);
-            Assert.Equal(13, inter.Expr());
+            Assert.Equal(13, GetInterpreter(text).Interpret());
         }
 
         [Fact]
         public void Should_Succes_When_Add()
         {
             string text = "3+2";
-            var lexer = new Lexer(text);
-            Interpreter inter = new Interpreter(lexer);
-            Assert.Equal(5, inter.Expr());
+            Assert.Equal(5, GetInterpreter(text).Interpret());
         }
-
 
         [Fact]
         public void Should_Succes_When_Substract()
         {
             string text = "3-2";
-            var lexer = new Lexer(text);
-            Interpreter inter = new Interpreter(lexer);
-            Assert.Equal(1, inter.Expr());
+            Assert.Equal(1, GetInterpreter(text).Interpret());
         }
 
         [Fact]
         public void Should_Succes_When_SubstractMultipDigit()
         {
             string text = "13-11";
-            var lexer = new Lexer(text);
-            Interpreter inter = new Interpreter(lexer);
-            Assert.Equal(2, inter.Expr());
+            Assert.Equal(2, GetInterpreter(text).Interpret());
         }
 
         [Theory]
@@ -89,9 +81,8 @@ namespace Interpreter.Tests
         [InlineData("*")]
         public void Should_ThrowException_WhenInvalidExpression(string text)
         {
-            var lexer = new Lexer(text);
-            Interpreter inter = new Interpreter(lexer);
-            Assert.ThrowsAny<Exception>(() => inter.Expr());
+            Interpreter inter = GetInterpreter(text);
+            Assert.ThrowsAny<Exception>(() => inter.Interpret());
         }
     }
 }

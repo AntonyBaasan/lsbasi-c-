@@ -2,10 +2,10 @@
 {
     public class BinOp: AST
     {
-        private readonly Token token;
-        private readonly AST left;
-        private readonly Token op;
-        private readonly AST right;
+        public readonly Token token;
+        public readonly AST left;
+        public readonly Token op;
+        public readonly AST right;
 
         public BinOp(AST left, Token op, AST right)
         {

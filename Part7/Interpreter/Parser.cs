@@ -33,7 +33,7 @@ namespace Interpreter
                 Eat(TokenType.RPAREN);
                 return node;
             }
-            
+
             return null;
         }
 
@@ -87,10 +87,15 @@ namespace Interpreter
                     Eat(TokenType.MINUS);
                 }
 
-                node = new BinOp(left: Term(), op: token, right: node);
+                node = new BinOp(left: node, op: token, right: Term());
             }
 
             return node;
+        }
+
+        public AST Parse()
+        {
+            return Expr();
         }
 
     }
