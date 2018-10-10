@@ -12,6 +12,16 @@ namespace Interpreter.Tests
             Interpreter inter = new Interpreter(parser);
             return inter;
         }
+
+        [Theory]
+        [InlineData("-+3", -3)]
+        [InlineData("5-+3", 2)]
+        [InlineData("5----3", 8)]
+        public void Should_Succes_When_UnaryMinus(string input, int result)
+        {
+            Assert.Equal(result, GetInterpreter(input).Interpret());
+        }
+
         [Theory]
         [InlineData("7 + 3", "73+")]
         [InlineData("7 + 4 - 3", "74+3-")]

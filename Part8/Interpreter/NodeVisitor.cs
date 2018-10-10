@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Interpreter
 {
     public abstract class NodeVisitor
@@ -13,8 +15,12 @@ namespace Interpreter
             {
                 return VisitNum((Num)node);
             }
+            else if (node.GetType() == typeof(UnaryOp))
+            {
+                return VisitUnary((UnaryOp)node);
+            }
 
-            return -1;
+            throw new Exception("Unknown node!");
         }
 
         // Visitor that makes Polish Natation
@@ -38,5 +44,7 @@ namespace Interpreter
         public abstract int VisitBinOp(BinOp op);
 
         public abstract int VisitNum(Num num);
+
+        public abstract int VisitUnary(UnaryOp op);
     }
 }

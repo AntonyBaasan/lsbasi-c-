@@ -20,7 +20,18 @@ namespace Interpreter
 
         private AST Factor()
         {
+            //factor : (PLUS | MINUS) factor | INTEGER | LPAREN expr RPAREN
             var token = currentToken;
+            if (token.TokenType == TokenType.PLUS)
+            {
+                Eat(TokenType.PLUS);
+                return new UnaryOp(token, Factor());
+            }
+            if (token.TokenType == TokenType.MINUS)
+            {
+                Eat(TokenType.MINUS);
+                return new UnaryOp(token, Factor());
+            }
             if (token.TokenType == TokenType.INTEGER)
             {
                 Eat(TokenType.INTEGER);

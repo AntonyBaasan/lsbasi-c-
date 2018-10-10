@@ -38,6 +38,20 @@ namespace Interpreter
             return node.value;
         }
 
+        public override int VisitUnary(UnaryOp node)
+        {
+            if (node.op.TokenType == TokenType.PLUS)
+            {
+                return Visit(node.expr);
+            }
+            if (node.op.TokenType == TokenType.MINUS)
+            {
+                return -1 * Visit(node.expr);
+            }
+
+            throw new Exception("Unknown node!");
+        }
+
         public int Interpret()
         {
             var tree = parser.Parse();
@@ -49,6 +63,7 @@ namespace Interpreter
             var tree = parser.Parse();
             return VisitForPN(tree);
         }
+
 
     }
 }
