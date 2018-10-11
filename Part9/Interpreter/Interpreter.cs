@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Interpreter
 {
     public class Interpreter : NodeVisitor
     {
         private readonly Parser parser;
+        public readonly Dictionary<string, int> GLOBAL_VARIABLES = new Dictionary<string, int>();
 
         public Interpreter(Parser parser)
         {
@@ -52,10 +54,13 @@ namespace Interpreter
             throw new Exception("Unknown node!");
         }
 
-        public int Interpret()
+        public void Interpret()
         {
             var tree = parser.Parse();
-            return Visit(tree);
+            if (tree != null)
+            {
+                Visit(tree);
+            }
         }
 
         public string GetPolishNotation()
@@ -64,6 +69,33 @@ namespace Interpreter
             return VisitForPN(tree);
         }
 
+        public override void VisitCompound(Compound node)
+        {
+            foreach (var child in node.Children)
+            {
+                Visit(child);
+            }
+        }
 
+        public override void VisitAssign(Assign node)
+        {
+            var varName = node.Left.Value;
+            GLOBAL_VARIABLES[varName] = Visit(node.Right);
+        }
+
+        public override int VisitVar(Var node)
+        {
+            var varName = node.Value;
+            if (GLOBAL_VARIABLES.ContainsKey(varName))
+            {
+                return GLOBAL_VARIABLES[varName];
+            }
+
+            throw new Exception($"Variable {varName} doesn't exist!");
+        }
+
+        public override void VisitNoOp(NoOp node)
+        {
+        }
     }
 }

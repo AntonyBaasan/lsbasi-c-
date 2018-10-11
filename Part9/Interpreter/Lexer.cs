@@ -66,6 +66,25 @@ namespace Interpreter
             return int.Parse(result);
         }
 
+        private Token GetId()
+        {
+            var result = "";
+
+            while (currentChar != char.MinValue && char.IsLetterOrDigit(currentChar))
+            {
+                result += currentChar;
+                Advance();
+            }
+
+            if (Token.RESERVED_KEYWORDS.ContainsKey(result))
+            {
+                return Token.RESERVED_KEYWORDS[result];
+            }
+
+            return new Token(TokenType.ID, result);
+
+        }
+
         public Token GetNextToken()
         {
             while (currentChar != char.MinValue)
@@ -76,9 +95,27 @@ namespace Interpreter
                     continue;
                 }
 
+                if (char.IsLetter(currentChar))
+                {
+                    return GetId();
+                }
+
                 if (char.IsDigit(currentChar))
                 {
                     return new Token(TokenType.INTEGER, Integer().ToString());
+                }
+
+                if (currentChar == ':' && Peek() == '=')
+                {
+                    Advance();
+                    Advance();
+                    return new Token(TokenType.ASSIGN, ":=");
+                }
+
+                if (currentChar == ';')
+                {
+                    Advance();
+                    return new Token(TokenType.SEMI, ";");
                 }
 
                 if (currentChar == '*')
@@ -115,6 +152,12 @@ namespace Interpreter
                 {
                     Advance();
                     return new Token(TokenType.RPAREN, ")");
+                }
+
+                if (currentChar == '.')
+                {
+                    Advance();
+                    return new Token(TokenType.DOT, ".");
                 }
 
                 Error();

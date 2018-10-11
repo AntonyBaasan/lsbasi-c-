@@ -3,12 +3,18 @@
     public enum TokenType
     {
         INTEGER,
-        MUL,
-        DIV,
         PLUS,
         MINUS,
-        EOF,
+        MUL,
+        DIV,
         LPAREN,
-        RPAREN
+        RPAREN,
+        ID,
+        ASSIGN,
+        BEGIN,
+        END,
+        SEMI,
+        DOT,
+        EOF,
     }
 }

@@ -1,7 +1,14 @@
-﻿namespace Interpreter
+﻿using System.Collections.Generic;
+
+namespace Interpreter
 {
     public class Token
     {
+        public static Dictionary<string, Token> RESERVED_KEYWORDS = new Dictionary<string, Token>() {
+            { "BEGIN", new Token(TokenType.BEGIN, "BEGIN")},
+            { "END", new Token(TokenType.END, "END")}
+        };
+
         public Token(TokenType type, string value)
         {
             TokenType = type;

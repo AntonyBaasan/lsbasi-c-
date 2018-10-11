@@ -19,12 +19,33 @@ namespace Interpreter
             {
                 return VisitUnary((UnaryOp)node);
             }
+            else if (node.GetType() == typeof(Compound))
+            {
+                VisitCompound((Compound)node);
+                return -1;
+            }
+            else if (node.GetType() == typeof(Assign))
+            {
+                VisitAssign((Assign)node);
+                return -1;
+            }
+            else if (node.GetType() == typeof(Var))
+            {
+                return VisitVar((Var)node);
+            }
+            else if (node.GetType() == typeof(NoOp))
+            {
+                VisitNoOp((NoOp)node);
+                return -1;
+            }
 
             throw new Exception("Unknown node!");
         }
 
+
         // Visitor that makes Polish Natation
-        public string VisitForPN(AST node) {
+        public string VisitForPN(AST node)
+        {
             string result = "";
 
             if (node.GetType() == typeof(BinOp))
@@ -37,14 +58,16 @@ namespace Interpreter
             {
                 result = ((Num)node).value.ToString();
             }
-            
+
             return result;
         }
 
         public abstract int VisitBinOp(BinOp op);
-
         public abstract int VisitNum(Num num);
-
         public abstract int VisitUnary(UnaryOp op);
+        public abstract void VisitCompound(Compound node);
+        public abstract void VisitAssign(Assign node);
+        public abstract int VisitVar(Var node);
+        public abstract void VisitNoOp(NoOp node);
     }
 }
