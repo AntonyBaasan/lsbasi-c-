@@ -13,8 +13,13 @@ namespace Interpreter.Tests
             return inter;
         }
 
-        [Fact]
-        public void Should_Succes_When_UnaryMinus()
+        [Theory]
+        [InlineData(2, "number")]
+        [InlineData(2, "a")]
+        [InlineData(25, "b")]
+        [InlineData(27, "c")]
+        [InlineData(11, "x")]
+        public void Should_Succes_When_UnaryMinus(int value, string varName)
         {
             var input = @"BEGIN
     BEGIN
@@ -28,7 +33,7 @@ namespace Interpreter.Tests
             var interp = GetInterpreter(input);
             interp.Interpret();
             var gv = interp.GLOBAL_VARIABLES;
-            Assert.Equal(1, 1);
+            Assert.Equal(value, gv[varName]);
         }
 
     }
