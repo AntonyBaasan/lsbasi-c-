@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interpreter", "Interpreter\Interpreter.csproj", "{2CF59BAD-DE11-4D82-8EC1-B7E58C588A02}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interpreter.Tests", "Interpreter.Tests\Interpreter.Tests.csproj", "{20710E93-2057-4849-BACD-AE155D3B7967}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CF59BAD-DE11-4D82-8EC1-B7E58C588A02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CF59BAD-DE11-4D82-8EC1-B7E58C588A02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CF59BAD-DE11-4D82-8EC1-B7E58C588A02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CF59BAD-DE11-4D82-8EC1-B7E58C588A02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20710E93-2057-4849-BACD-AE155D3B7967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20710E93-2057-4849-BACD-AE155D3B7967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20710E93-2057-4849-BACD-AE155D3B7967}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20710E93-2057-4849-BACD-AE155D3B7967}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CBDA9C30-E78D-4B28-B0F6-F00DE1DAE9A2}
+	EndGlobalSection
+EndGlobal
