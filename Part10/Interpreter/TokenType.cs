@@ -3,10 +3,14 @@
     public enum TokenType
     {
         INTEGER,
+        INTEGER_CONST,
+        REAL,
+        REAL_CONST,
         PLUS,
         MINUS,
         MUL,
-        DIV,
+        INTEGER_DIV,
+        FLOAT_DIV,
         LPAREN,
         RPAREN,
         ID,
@@ -15,6 +19,10 @@
         END,
         SEMI,
         DOT,
+        PROGRAM,
+        VAR,
+        COLON,
+        COMMA,
         EOF,
     }
 }
