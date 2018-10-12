@@ -103,10 +103,10 @@ namespace Interpreter
 
     public class Block : AST
     {
-        public AST Declarations { get; }
+        public List<AST> Declarations { get; }
         public AST CompoundStatement { get; }
 
-        public Block(AST declarations, AST compoundStatement)
+        public Block(List<AST> declarations, AST compoundStatement)
         {
             Declarations = declarations;
             CompoundStatement = compoundStatement;
