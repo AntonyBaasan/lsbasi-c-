@@ -18,7 +18,7 @@ namespace Interpreter
         {
             this.left = left;
             this.op = op;
-            this.token = op;
+            token = op;
             this.right = right;
         }
     }
@@ -26,12 +26,12 @@ namespace Interpreter
     public class Num : AST
     {
         private readonly Token token;
-        public readonly int value;
+        public readonly double value;
 
         public Num(Token token)
         {
             this.token = token;
-            this.value = int.Parse(token.Value);
+            value = double.Parse(token.Value);
         }
     }
 

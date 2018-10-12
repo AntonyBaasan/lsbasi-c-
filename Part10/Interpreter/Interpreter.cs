@@ -44,7 +44,7 @@ namespace Interpreter
             }
             if (node.op.TokenType == TokenType.INTEGER_DIV)
             {
-                return (int)Visit(node.left) / (int)Visit(node.right);
+                return double.Parse(Visit(node.left).ToString()) / double.Parse(Visit(node.right).ToString());
             }
             if (node.op.TokenType == TokenType.FLOAT_DIV)
             {
@@ -103,12 +103,10 @@ namespace Interpreter
 
         public override void VisitType(Type node)
         {
-
         }
 
         public override void VisitVarDecl(VarDecl node)
         {
-
         }
 
         public override void VisitBlock(Block node)
