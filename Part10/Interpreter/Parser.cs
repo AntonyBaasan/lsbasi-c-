@@ -278,8 +278,6 @@ namespace Interpreter
             }
         }
 
-
-
         private void Eat(TokenType tokenType)
         {
             if (currentToken.TokenType == tokenType)
@@ -291,8 +289,6 @@ namespace Interpreter
                 Error();
             }
         }
-
-
 
         public AST Parse()
         {
